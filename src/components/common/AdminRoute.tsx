@@ -14,12 +14,17 @@ const AdminRoute = ({ children }: Props) => {
 
     useEffect(() => {
         setMounted(true)
-        if (!isLoggedIn) router.replace("/login")
-        else if (user?.role !== "admin") router.replace("/")
-    }, [isLoggedIn, user, router])
+    }, [])
 
-    if (!mounted || !isLoggedIn || user?.role !== "admin") return null;
+    // Only redirect AFTER mount — ensures localStorage is read and Redux is hydrated
+    useEffect(() => {
+        if (mounted && !isLoggedIn) router.replace("/login")
+        else if (mounted && user?.role !== "admin") router.replace("/")
+    }, [mounted, isLoggedIn, user, router])
+
+    if (!mounted) return null;
+    if (!isLoggedIn || user?.role !== "admin") return null;
     return <>{children}</>
 }
 
-export default AdminRoute
+export default AdminRoute

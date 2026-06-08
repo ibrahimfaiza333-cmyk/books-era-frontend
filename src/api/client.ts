@@ -25,8 +25,14 @@ api.interceptors.response.use(
     (error) => {
         if (error.response?.status === 401) {
             if (typeof window !== "undefined") {
-                localStorage.removeItem("accessToken")
-                window.location.href = "/login"
+                const token = localStorage.getItem("accessToken")
+                // Only redirect to login if user HAD a token (was logged in)
+                // If no token, they are a guest — don't redirect
+                if (token) {
+                    localStorage.removeItem("accessToken")
+                    localStorage.removeItem("user")
+                    window.location.href = "/login"
+                }
             }
         }
         return Promise.reject(error)

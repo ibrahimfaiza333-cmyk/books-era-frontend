@@ -6,6 +6,7 @@ import PageSpinner from "../components/common/PageSpinner"
 import { useCart } from "../hooks/useCart"
 import { toastApiError } from "../lib/api-error"
 import { toast } from "react-toastify";
+import ProtectedRoute from "../components/common/ProtectedRoute"
 
 const Cart = () => {
     const navigate = useRouter()
@@ -49,6 +50,7 @@ const Cart = () => {
     const items = cart?.items || []
 
     return (
+        <ProtectedRoute>
         <main style={{
             minHeight: "100vh",
             background: "#f3f4f6", // matching landing page background
@@ -335,6 +337,7 @@ const Cart = () => {
                 )}
             </div>
         </main>
+        </ProtectedRoute>
     )
 }
 

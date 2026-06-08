@@ -7,6 +7,7 @@ import PageSpinner from "../components/common/PageSpinner"
 import { useOrderDetail, useOrders } from "../hooks/useOrders"
 import { toastApiError } from "../lib/api-error"
 import { toast } from "react-toastify";
+import ProtectedRoute from "../components/common/ProtectedRoute"
 
 const statusStyle: Record<string, React.CSSProperties> = {
     pending:    { background: "#fef9c3", color: "#854d0e", border: "1px solid #fde047" },
@@ -75,20 +76,23 @@ const OrderDetail = () => {
 
     if (isLoading) return <PageSpinner />
     if (!order) return (
-        <div style={{ minHeight: "calc(100vh - 64px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "#f3f4f6" }}>
-            <h2 style={{ fontSize: 24, fontWeight: 800, color: "#111827", marginBottom: 10 }}>Order Not Found</h2>
-            <p style={{ color: "#6b7280", marginBottom: 20 }}>We couldn't find the order you're looking for.</p>
-            <Link href="/orders" style={{ background: "#f97316", color: "#fff", padding: "10px 20px", borderRadius: 8, textDecoration: "none", fontWeight: 600 }}>
-                Go to My Orders
-            </Link>
-        </div>
+        <ProtectedRoute>
+            <div style={{ minHeight: "calc(100vh - 64px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "#f3f4f6" }}>
+                <h2 style={{ fontSize: 24, fontWeight: 800, color: "#111827", marginBottom: 10 }}>Order Not Found</h2>
+                <p style={{ color: "#6b7280", marginBottom: 20 }}>We couldn't find the order you're looking for.</p>
+                <Link href="/orders" style={{ background: "#f97316", color: "#fff", padding: "10px 20px", borderRadius: 8, textDecoration: "none", fontWeight: 600 }}>
+                    Go to My Orders
+                </Link>
+            </div>
+        </ProtectedRoute>
     )
 
     return (
-        <div style={{ minHeight: "calc(100vh - 64px)", width: "100%", background: "#F5F3EF" }}>
+        <ProtectedRoute>
+            <div style={{ minHeight: "calc(100vh - 64px)", width: "100%", background: "#F5F3EF" }}>
 
-            {/* ── Banner ─────────────────────────────────── */}
-            <div style={{ background: "linear-gradient(135deg,#c05e0c,#e1711c,#f59e0b)", padding: "28px 24px" }}>
+                {/* ── Banner ─────────────────────────────────── */}
+                <div style={{ background: "linear-gradient(135deg,#c05e0c,#e1711c,#f59e0b)", padding: "28px 24px" }}>
                 <div style={{ maxWidth: 1000, margin: "0 auto" }}>
                     {/* Back link */}
                     <Link
@@ -293,7 +297,8 @@ const OrderDetail = () => {
             </div>
 
             <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-        </div>
+            </div>
+        </ProtectedRoute>
     )
 }
 

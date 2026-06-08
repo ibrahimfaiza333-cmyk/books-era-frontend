@@ -5,6 +5,7 @@ import { Package, ChevronRight, ShoppingBag } from "lucide-react"
 import PageSpinner from "../components/common/PageSpinner"
 import { useOrdersList } from "../hooks/useOrders"
 import type { Order } from "../types"
+import ProtectedRoute from "../components/common/ProtectedRoute"
 
 const statusStyle: Record<string, React.CSSProperties> = {
     pending:    { background: "#fef9c3", color: "#854d0e", border: "1px solid #fde047" },
@@ -24,10 +25,11 @@ const Orders = () => {
     if (isLoading) return <PageSpinner />
 
     return (
-        <div style={{ minHeight: "calc(100vh - 64px)", width: "100%", background: "#F5F3EF" }}>
+        <ProtectedRoute>
+            <div style={{ minHeight: "calc(100vh - 64px)", width: "100%", background: "#F5F3EF" }}>
 
-            {/* ── Banner ─────────────────────────────────── */}
-            <div style={{ background: "linear-gradient(135deg,#c05e0c,#e1711c,#f59e0b)", padding: "36px 24px" }}>
+                {/* ── Banner ─────────────────────────────────── */}
+                <div style={{ background: "linear-gradient(135deg,#c05e0c,#e1711c,#f59e0b)", padding: "36px 24px" }}>
                 <div style={{ maxWidth: 1000, margin: "0 auto", display: "flex", alignItems: "center", gap: 20 }}>
                     <div style={{
                         width: 56, height: 56, borderRadius: 16,
@@ -170,7 +172,8 @@ const Orders = () => {
                     </div>
                 )}
             </div>
-        </div>
+            </div>
+        </ProtectedRoute>
     )
 }
 

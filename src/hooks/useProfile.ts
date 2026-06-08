@@ -19,9 +19,12 @@ export function useProfile() {
     const queryClient = useQueryClient()
     const profile = useAppSelector((state) => state.auth.user)
 
+    const { isLoggedIn } = useAppSelector((state) => state.auth)
+
     const addressesQuery = useQuery({
         queryKey: queryKeys.addresses,
         queryFn: getAddressesApi,
+        enabled: isLoggedIn,
     })
 
     const invalidateAddresses = () =>

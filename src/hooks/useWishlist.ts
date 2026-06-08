@@ -5,13 +5,17 @@ import {
     removeFromWishlist as removeFromWishlistApi,
 } from "../api/wishlist.api"
 import { queryKeys } from "../lib/query-keys"
+import { useAppSelector } from "../store/hooks"
 
 export function useWishlist() {
     const queryClient = useQueryClient()
+    const { isLoggedIn } = useAppSelector(state => state.auth)
 
     const query = useQuery({
         queryKey: queryKeys.wishlist,
         queryFn: getWishlistApi,
+        // Only fetch when logged in — prevents cross-browser cookie leak
+        enabled: isLoggedIn,
     })
 
     const invalidateWishlist = () =>

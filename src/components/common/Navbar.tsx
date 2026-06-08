@@ -513,7 +513,7 @@ const Navbar = () => {
                         className="relative text-gray-300 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200 outline-none active:scale-95 flex items-center p-1.5 sm:p-2"
                     >
                         <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2} />
-                        {totalItems > 0 && (
+                        {isLoggedIn && totalItems > 0 && (
                             <span className="absolute bg-[#e1711c] text-[#131921] text-[10px] sm:text-[12px] font-extrabold rounded-full flex items-center justify-center ring-2 ring-[#131921] -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5">
                                 {totalItems}
                             </span>

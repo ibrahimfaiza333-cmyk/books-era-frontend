@@ -8,6 +8,7 @@ import {
     type AddToCartPayload,
 } from "../api/cart.api"
 import { queryKeys } from "../lib/query-keys"
+import { useAppSelector } from "../store/hooks"
 
 interface ClearCartOptions {
     /** When false, only clears cache (e.g. after order placed). Default true. */
@@ -20,11 +21,15 @@ interface UseCartOptions {
 
 export function useCart(options?: UseCartOptions) {
     const queryClient = useQueryClient()
+    const { isLoggedIn } = useAppSelector(state => state.auth)
 
     const query = useQuery({
         queryKey: queryKeys.cart,
         queryFn: getCartApi,
-        enabled: options?.enabled ?? true,
+        // Only fetch cart when the user is actually logged in.
+        // Without this gate, browsers that persist cookies (Firefox/Edge)
+        // would send the old session cookie and show a previous user's cart.
+        enabled: isLoggedIn && (options?.enabled ?? true),
     })
 
     const syncCart = (cart: Awaited<ReturnType<typeof getCartApi>>) => {

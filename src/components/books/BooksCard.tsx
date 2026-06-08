@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Heart, ShoppingCart, Image as ImageIcon } from "lucide-react"
 import type { Book } from "../../types"
 import { useCart } from "../../hooks/useCart"
@@ -17,6 +18,7 @@ const BookCard = ({ book }: Props) => {
     const { isLoggedIn } = useAppSelector(state => state.auth)
     const { addToCart }     = useCart()
     const { addToWishlist } = useWishlist()
+    const router = useRouter()
 
     const currentPrice = book.discountPrice > 0 ? book.discountPrice : book.price
     const discountPercent = getDiscountPercent(book.price, currentPrice)
@@ -25,6 +27,7 @@ const BookCard = ({ book }: Props) => {
         e.preventDefault()
         if (!isLoggedIn) {
             toast.error("Please login first!")
+            router.push("/login")
             return
         }
         try {
@@ -39,6 +42,7 @@ const BookCard = ({ book }: Props) => {
         e.preventDefault()
         if (!isLoggedIn) {
             toast.error("Please login first!")
+            router.push("/login")
             return
         }
         try {

@@ -6,6 +6,7 @@ import { useWishlist } from "../hooks/useWishlist"
 import { useCart } from "../hooks/useCart"
 import { toastApiError } from "../lib/api-error"
 import { toast } from "react-toastify";
+import ProtectedRoute from "../components/common/ProtectedRoute"
 
 const Wishlist = () => {
     const { wishlist, isLoading, removeFromWishlist } = useWishlist()
@@ -32,9 +33,10 @@ const Wishlist = () => {
     if (isLoading) return <PageSpinner />
 
     return (
-        <div style={{ minHeight: "calc(100vh - 64px)", width: "100%", background: "#F5F3EF" }}>
+        <ProtectedRoute>
+            <div style={{ minHeight: "calc(100vh - 64px)", width: "100%", background: "#F5F3EF" }}>
 
-            {/* ── Banner ─────────────────────────────────── */}
+                {/* ── Banner ─────────────────────────────────── */}
             <div style={{ background: "linear-gradient(135deg,#c05e0c,#e1711c,#f59e0b)", padding: "36px 24px" }}>
                 <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", gap: 20 }}>
                     <div style={{
@@ -231,7 +233,8 @@ const Wishlist = () => {
                     </div>
                 )}
             </div>
-        </div>
+            </div>
+        </ProtectedRoute>
     )
 }
 

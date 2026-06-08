@@ -1,5 +1,5 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react"
 import Link from "next/link";
 import {
@@ -21,6 +21,7 @@ import type{ Review } from "../types"
 
 const BookDetail = () => {
     const params = useParams()
+    const router = useRouter()
     const id = params?.id as string | undefined
     const { isLoggedIn } = useAppSelector(state => state.auth)
     const { addToCart }     = useCart()
@@ -63,6 +64,7 @@ const BookDetail = () => {
     const handleAddToCart = async () => {
         if (!isLoggedIn) {
             toast.error("Please login first!")
+            router.push("/login")
             return
         }
         try {
@@ -79,6 +81,7 @@ const BookDetail = () => {
     const handleWishlist = async () => {
         if (!isLoggedIn) {
             toast.error("Please login first!")
+            router.push("/login")
             return
         }
         try {

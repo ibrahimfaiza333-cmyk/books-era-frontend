@@ -10,20 +10,24 @@ import {
     type CreateOrderPayload,
 } from "../api/orders.api"
 import { queryKeys } from "../lib/query-keys"
+import { useAppSelector } from "../store/hooks"
 
 export function useOrdersList(page: number) {
+    const { isLoggedIn } = useAppSelector(state => state.auth)
     return useQuery({
         queryKey: queryKeys.orders(page),
         placeholderData: keepPreviousData,
         queryFn: () => getOrdersApi(page),
+        enabled: isLoggedIn,
     })
 }
 
 export function useOrderDetail(id: string | undefined) {
+    const { isLoggedIn } = useAppSelector(state => state.auth)
     return useQuery({
         queryKey: queryKeys.order(id),
         queryFn: () => getOrderByIdApi(id!),
-        enabled: !!id,
+        enabled: isLoggedIn && !!id,
     })
 }
 

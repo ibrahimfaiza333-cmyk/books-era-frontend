@@ -86,10 +86,10 @@ function getCategoryMeta(name: string, index: number): SlideMeta {
 const HeroSection = () => {
   const { data: categories } = useCategories();
   const [current, setCurrent] = useState(0);
-  const [animating, setAnimating] = useState(false);
   const [visible, setVisible] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const animatingRef = useRef(false);
 
   // Build slides: first = All Books hero, rest = one per category
   const slides = [
@@ -135,16 +135,16 @@ const HeroSection = () => {
 
   const goTo = useCallback(
     (index: number) => {
-      if (animating || index === current) return;
-      setAnimating(true);
+      if (animatingRef.current || index === current) return;
+      animatingRef.current = true;
       setVisible(false);
       setTimeout(() => {
         setCurrent(index);
         setVisible(true);
-        setAnimating(false);
+        animatingRef.current = false;
       }, 450);
     },
-    [animating, current]
+    [current]
   );
 
   const next = useCallback(() => {
@@ -170,9 +170,13 @@ const HeroSection = () => {
   const isCentered = isMobile;
 
   return (
+    <>
+    <style>{`
+      .hero-section { height: clamp(400px, 85vw, 600px); }
+      @media (min-width: 768px) { .hero-section { height: clamp(600px, 85vh, 950px); } }
+    `}</style>
     <section
-      className="relative w-full overflow-hidden"
-      style={{ height: isMobile ? "clamp(400px, 85vw, 600px)" : "clamp(600px, 85vh, 950px)" }}
+      className="hero-section relative w-full overflow-hidden"
     >
       {/* Background Image */}
       <div className="absolute inset-0">
@@ -384,6 +388,7 @@ const HeroSection = () => {
         }}
       />
     </section>
+    </>
   );
 };
 

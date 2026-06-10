@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import {
-    BookOpen, Search, Bell, ShoppingCart, Menu, X, User, ChevronDown, ChevronRight, Tag
+     Search, Bell, ShoppingCart, Menu, X, User, ChevronDown, ChevronRight, Tag,BookOpen
 } from "lucide-react";
 import { useAppSelector } from "../../store/hooks";
 import { useAuth } from "../../hooks/useAuth";

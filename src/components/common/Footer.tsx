@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { BookOpen, MapPin, Phone, Mail, ArrowRight } from "lucide-react"
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa"
+import { FaFacebook, FaInstagram } from "react-icons/fa"
 import { APP_NAME, EMAIL_ID, PHONE_NO, ADDRESS } from "../../utils/constants"
 import { useCategories } from "../../hooks/useCategories"
 
@@ -54,9 +54,8 @@ const Footer = () => {
                             {/* Social Icons */}
                             <div style={{ display: "flex", gap: 10, paddingTop: 4 }}>
                                 {[
-                                    { icon: <FaFacebook size={16} />, href: "#" },
-                                    { icon: <FaInstagram size={16} />, href: "#" },
-                                    { icon: <FaTwitter size={16} />, href: "#" },
+                                    { icon: <FaFacebook size={16} />, href: "https://www.facebook.com/share/1FFdQ6cpbi/" },
+                                    { icon: <FaInstagram size={16} />, href: "https://www.instagram.com/books.era_?igsh=Z3Z3d2l4MWh2NDlk" },
                                 ].map((s, i) => (
                                     <a
                                         key={i}

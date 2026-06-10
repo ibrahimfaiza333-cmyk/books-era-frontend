@@ -9,7 +9,7 @@ const features = [
     icon: ShieldCheck,
   },
   {
-    title: "7 Days Delivery",
+    title: "5-7 Days Delivery",
     subtitle: "Fast delivery all over Pakistan",
     icon: Truck,
   },

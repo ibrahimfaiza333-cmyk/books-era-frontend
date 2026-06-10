@@ -96,7 +96,7 @@ const HeroSection = () => {
     {
       id: "all-books",
       image: "/slide1.png",
-      badge: "Welcome to Suleman Books",
+      badge: "Welcome to Books-era",
       heading: "Discover Your Next\nFavorite Book",
       subheading: "Explore thousands of books across every genre. From bestsellers to rare finds — your perfect read awaits.",
       ctaLabel: "Shop Now",

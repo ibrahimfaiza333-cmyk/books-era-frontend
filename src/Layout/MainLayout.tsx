@@ -2,6 +2,7 @@
 import { usePathname } from "next/navigation"
 import Navbar from "../components/common/Navbar"
 import Footer from "../components/common/Footer"
+import WhatsAppFloat from "@/components/common/WhatsAppFloat";
 
 export default function MainLayout({ children }: { children?: React.ReactNode }) {
     const pathname = usePathname() ?? ""
@@ -20,6 +21,8 @@ export default function MainLayout({ children }: { children?: React.ReactNode })
         <div className="flex min-h-screen flex-col bg-[#F9F9F9] dark:bg-gray-900 transition-colors duration-300">
             {!hideLayout && <Navbar />}
             <main className={`flex-1 w-full ${!hideLayout ? 'pt-16' : ''}`}>
+           <WhatsAppFloat />
+
                 {children}
             </main>
             {!hideLayout && <Footer />}

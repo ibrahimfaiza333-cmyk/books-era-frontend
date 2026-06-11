@@ -1,10 +1,10 @@
-﻿export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 import type { Metadata } from "next";
 import { AdminLayoutClient, AdminDashboardClient } from "@/app/PageLoaders";
 
 export const metadata: Metadata = {
-  title: "Admin Dashboard | Suleman Books",
-  description: "Suleman Books admin panel.",
+  title: "Admin Dashboard | Books Era",
+  description: "Books Era admin panel.",
 };
 
 export default function Page() {

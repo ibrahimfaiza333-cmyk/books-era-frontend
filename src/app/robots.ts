@@ -25,7 +25,7 @@ export default function robots(): MetadataRoute.Robots {
                 disallow: ["/"],
             }
         ],
-        sitemap: "https://sulemanbooks.com/sitemap.xml",
-        host: "https://sulemanbooks.com",
+        sitemap: "https://www.books-era.com/sitemap.xml",
+        host: "https://www.books-era.com",
     }
 }

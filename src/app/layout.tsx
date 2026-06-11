@@ -14,29 +14,29 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sulemanbooks.com"),
-  title: "Suleman Books | Your Trusted Bookstore in Pakistan",
-  description: "Discover a wide variety of books at Suleman Books. We offer educational, fictional, and non-fictional books at the best prices with fast delivery across Pakistan.",
-  keywords: ["books", "bookstore", "pakistan", "buy books online", "suleman books", "academic books", "novels"],
-  authors: [{ name: "Suleman Books" }],
+  metadataBase: new URL("https://books-era.com"),
+  title: "Books Era | Your Trusted Bookstore in Pakistan",
+  description: "Discover a wide variety of books at Books Era. We offer educational, fictional, and non-fictional books at the best prices with fast delivery across Pakistan.",
+  keywords: ["books", "bookstore", "pakistan", "buy books online", "books era", "academic books", "novels"],
+  authors: [{ name: "Books Era" }],
   openGraph: {
-    title: "Suleman Books | Your Trusted Bookstore",
-    description: "Discover a wide variety of books at Suleman Books. Fast delivery across Pakistan.",
-    url: "https://sulemanbooks.com",
-    siteName: "Suleman Books",
+    title: "Books Era | Your Trusted Bookstore",
+    description: "Discover a wide variety of books at Books Era. Fast delivery across Pakistan.",
+    url: "https://books-era.com",
+    siteName: "Books Era",
     type: "website",
     images: [
       {
         url: "/images/og-image.jpg", // You can replace this with your actual logo/banner path
         width: 1200,
         height: 630,
-        alt: "Suleman Books Banner",
+        alt: "Books Era Banner",
       }
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Suleman Books | Your Trusted Bookstore",
+    title: "Books Era | Your Trusted Bookstore",
     description: "Buy books online at the best prices with fast delivery.",
     images: ["/images/og-image.jpg"],
   },

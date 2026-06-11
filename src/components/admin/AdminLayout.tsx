@@ -99,7 +99,7 @@ const AdminLayout = ({ children, title }: Props) => {
                                 {title}
                             </h1>
                             <p className="text-xs mt-0.5 font-medium hidden sm:block" style={{ color: '#94a3b8' }}>
-                                Suleman Books · Admin Dashboard
+                                Books Era · Admin Dashboard
                             </p>
                         </div>
                     </div>

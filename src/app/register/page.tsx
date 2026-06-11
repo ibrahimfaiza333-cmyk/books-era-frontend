@@ -1,9 +1,9 @@
-﻿export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 import type { Metadata } from "next";
 import { RegisterClient } from "@/app/PageLoaders";
 
 export const metadata: Metadata = {
-  title: "Register | Suleman Books",
+  title: "Register | Books Era",
   description: "Create an account.",
 };
 

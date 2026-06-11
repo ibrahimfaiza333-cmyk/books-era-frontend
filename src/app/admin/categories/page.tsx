@@ -4,7 +4,7 @@ import { AdminLayoutClient, AdminCategoriesClient } from "@/app/PageLoaders";
 
 export const metadata: Metadata = {
   title: "Manage Categories | Admin",
-  description: "Suleman Books admin - manage categories.",
+  description: "Books Era admin - manage categories.",
 };
 
 export default function Page() {

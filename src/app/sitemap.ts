@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic"
 
 import { MetadataRoute } from "next"
 
-const BASE_URL = "https://sulemanbooks.com"
+const BASE_URL = "https://www.books-era.com"
 const API_URL  = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

@@ -20,12 +20,12 @@ export async function generateMetadata(
 
     if (!book) {
       return {
-        title: "Book Not Found | Suleman Books",
+        title: "Book Not Found | Books Era",
       };
     }
 
-    const title = `${book.title} by ${book.author} | Suleman Books`;
-    const description = book.description?.slice(0, 160) || `Buy ${book.title} online in Pakistan at Suleman Books.`;
+    const title = `${book.title} by ${book.author} | Books Era`;
+    const description = book.description?.slice(0, 160) || `Buy ${book.title} online in Pakistan at Books Era.`;
     const imageUrl = book.coverImage || book.thumbnail || (book.images && book.images[0]?.url) || "/images/og-image.jpg";
 
     return {
@@ -35,7 +35,7 @@ export async function generateMetadata(
         title,
         description,
         type: "book",
-        url: `https://sulemanbooks.com/books/${id}`,
+        url: `https://www.books-era.com/books/${id}`,
         images: [
           {
             url: imageUrl,
@@ -54,7 +54,7 @@ export async function generateMetadata(
     };
   } catch (error) {
     return {
-      title: "Book Details | Suleman Books",
+      title: "Book Details | Books Era",
       description: "View detailed information about this book.",
     };
   }

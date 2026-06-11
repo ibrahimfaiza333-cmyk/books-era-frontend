@@ -66,7 +66,7 @@ const Sidebar = ({ isOpen, onClose }: Props) => {
                         </div>
                         <div>
                             <p className="font-extrabold text-sm leading-none text-white tracking-wide">Admin Panel</p>
-                            <p className="text-xs mt-1 font-semibold" style={{ color: '#e1711c' }}>Suleman Books</p>
+                            <p className="text-xs mt-1 font-semibold" style={{ color: '#e1711c' }}>Books Era</p>
                         </div>
                     </Link>
                     <button

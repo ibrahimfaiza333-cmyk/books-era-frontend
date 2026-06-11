@@ -1,9 +1,9 @@
-﻿export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 import type { Metadata } from "next";
 import { MainLayoutClient, BooksClient } from "@/app/PageLoaders";
 
 export const metadata: Metadata = {
-  title: "All Books | Suleman Books",
+  title: "All Books | Books Era",
   description: "Browse our book collection.",
 };
 

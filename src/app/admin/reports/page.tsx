@@ -4,7 +4,7 @@ import { AdminLayoutClient, AdminReportsClient } from "@/app/PageLoaders";
 
 export const metadata: Metadata = {
   title: "Reports | Admin",
-  description: "Suleman Books admin - sales and performance reports.",
+  description: "Books Era admin - sales and performance reports.",
 };
 
 export default function Page() {

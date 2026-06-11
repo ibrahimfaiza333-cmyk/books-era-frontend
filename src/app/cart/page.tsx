@@ -1,9 +1,9 @@
-﻿export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 import type { Metadata } from "next";
 import { MainLayoutClient, CartClient } from "@/app/PageLoaders";
 
 export const metadata: Metadata = {
-  title: "Your Cart | Suleman Books",
+  title: "Your Cart | Books Era",
   description: "Your shopping cart.",
 };
 

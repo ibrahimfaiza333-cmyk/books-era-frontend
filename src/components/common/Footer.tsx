@@ -4,6 +4,8 @@ import { BookOpen, MapPin, Phone, Mail, ArrowRight } from "lucide-react"
 import { FaFacebook, FaInstagram } from "react-icons/fa"
 import { APP_NAME, EMAIL_ID, PHONE_NO, ADDRESS } from "../../utils/constants"
 import { useCategories } from "../../hooks/useCategories"
+import Image from "next/image"
+
 
 const Footer = () => {
     const { data: categories } = useCategories()
@@ -32,14 +34,14 @@ const Footer = () => {
                         {/* ── Column 1 — Brand ── */}
                         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
                             <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-                                <div style={{
-                                    width: 42, height: 42, borderRadius: 12,
-                                    background: "linear-gradient(135deg, #f97316, #fb923c)",
-                                    display: "flex", alignItems: "center", justifyContent: "center",
-                                    boxShadow: "0 4px 14px rgba(249,115,22,0.4)"
-                                }}>
-                                    <BookOpen size={22} color="#fff" />
-                                </div>
+                               
+<Image
+  src="/bookera.png"
+  alt="Books Era Logo"
+  width={40}
+  height={40}
+  className="w-10 h-10 object-contain"
+/>                                
                                 <span style={{ color: "#fff", fontWeight: 800, fontSize: 20, letterSpacing: "-0.3px" }}>
                                     {APP_NAME}
                                 </span>

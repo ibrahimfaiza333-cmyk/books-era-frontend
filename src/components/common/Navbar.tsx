@@ -11,6 +11,7 @@ import { useCart } from "../../hooks/useCart";
 import { APP_NAME } from "../../utils/constants";
 import { useCategories } from "../../hooks/useCategories";
 import { useNotifications } from "../../hooks/useNotifications";
+import Image from "next/image";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -82,8 +83,14 @@ const Navbar = () => {
 
                 {/* Left Section: Logo */}
                 <Link href="/" className="flex items-center shrink-0 outline-none gap-2 sm:gap-3">
-                    <BookOpen className="w-6 h-6 sm:w-8 sm:h-8 text-[#e1711c] transition-transform duration-300 hover:scale-110" />
-                    <span className="font-bold tracking-wide text-white text-lg sm:text-2xl whitespace-nowrap">
+<Image
+    src="/bookera.png"
+    alt="Logo"
+    width={50}
+    height={50}
+    className="w-10 h-10 object-contain"
+  />
+           <span className="font-bold tracking-wide text-white text-lg sm:text-2xl whitespace-nowrap">
                         {APP_NAME}
                     </span>
                 </Link>

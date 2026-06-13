@@ -4,7 +4,7 @@ export default function TopAnnouncementBar() {
   const items = [
     "Matric & Intermediate Books — Updated Editions In Stock",
     "Free Delivery on Orders Over Rs. 10,000",
-    "Trusted by 10,000+ Parents mm& Students Nationwide",
+    "Trusted by 10,000+ Parents & Students Nationwide",
   ];
 
   return (

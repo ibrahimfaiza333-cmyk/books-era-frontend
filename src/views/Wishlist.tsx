@@ -21,15 +21,22 @@ const Wishlist = () => {
         }
     }
 
-    const handleAddToCart = async (bookId: string) => {
-        try {
-            await addToCart({ bookId, quantity: 1 })
-            toast.success("Added to cart!")
-        } catch (error: unknown) {
-            toastApiError(error)
-        }
-    }
+  const handleAddToCart = async (bookId: string) => {
+    try {
+        await addToCart({ bookId, quantity: 1 })
 
+        // ✅ Meta Pixel AddToCart Event
+        trackEvent("AddToCart", {
+            content_ids: [bookId],
+            content_type: "product",
+            currency: "PKR",
+        })
+
+        toast.success("Added to cart!")
+    } catch (error: unknown) {
+        toastApiError(error)
+    }
+}
     if (isLoading) return <PageSpinner />
 
     return (

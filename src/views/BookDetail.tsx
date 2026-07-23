@@ -1,6 +1,6 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import Link from "next/link";
 import {
     ShoppingCart, Heart, Star,
@@ -18,6 +18,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { addReview } from "../api/reviews.api"
 import { queryKeys } from "../lib/query-keys"
 import type{ Review } from "../types"
+import { trackEvent } from "@/lib/facebookPixel";
+
 
 const BookDetail = () => {
     const params = useParams()
@@ -57,26 +59,49 @@ const BookDetail = () => {
     }
 
     const currentPrice = book ? (book.discountPrice > 0 ? book.discountPrice : book.price) : 0
+    useEffect(() => {
+    if (book) {
+        trackEvent("ViewContent", {
+            content_name: book.title,
+            content_ids: [book._id],
+            content_type: "product",
+            value: currentPrice,
+            currency: "PKR",
+        });
+    }
+}, [book, currentPrice]);
     const discountPercent = book
         ? getDiscountPercent(book.price, currentPrice)
         : 0
-
-    const handleAddToCart = async () => {
-        if (!isLoggedIn) {
-            toast.error("Please login first!")
-            router.push("/login")
-            return
-        }
-        try {
-            setLoading(true)
-            await addToCart({ bookId: id!, quantity })
-            toast.success("Added to cart!")
-        } catch (error: unknown) {
-            toastApiError(error, "Failed!")
-        } finally {
-            setLoading(false)
-        }
+const handleAddToCart = async () => {
+    if (!isLoggedIn) {
+        toast.error("Please login first!")
+        router.push("/login")
+        return
     }
+
+    try {
+        setLoading(true)
+
+        await addToCart({ bookId: id!, quantity })
+
+        // ✅ Meta Pixel AddToCart Event
+        trackEvent("AddToCart", {
+            content_name: book.title,
+            content_ids: [book._id],
+            content_type: "product",
+            value: currentPrice,
+            currency: "PKR",
+        })
+
+        toast.success("Added to cart!")
+
+    } catch (error: unknown) {
+        toastApiError(error, "Failed!")
+    } finally {
+        setLoading(false)
+    }
+}
 
     const handleWishlist = async () => {
         if (!isLoggedIn) {

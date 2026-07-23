@@ -7,6 +7,8 @@ import { useCart } from "../hooks/useCart"
 import { toastApiError } from "../lib/api-error"
 import { toast } from "react-toastify";
 import ProtectedRoute from "../components/common/ProtectedRoute"
+import { trackEvent } from "@/lib/facebookPixel";
+
 
 const Cart = () => {
     const navigate = useRouter()
@@ -314,7 +316,8 @@ const Cart = () => {
 
 
                                 <button
-                                    onClick={() => navigate.push("/checkout")}
+                                   onClick={() => { trackEvent("InitiateCheckout");
+        navigate.push("/checkout");}}
                                     style={{
                                         width: "100%", marginTop: 24, padding: "16px", borderRadius: 14,
                                         background: "linear-gradient(135deg, #f97316, #fb923c)", color: "#fff",

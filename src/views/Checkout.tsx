@@ -10,6 +10,8 @@ import { useAppSelector } from "../store/hooks"
 import { toast } from "react-toastify";
 import type{ Address } from "../types"
 import ProtectedRoute from "../components/common/ProtectedRoute"
+import { trackEvent } from "@/lib/facebookPixel";
+
 
 interface CheckoutForm {
     note:        string
@@ -62,41 +64,50 @@ const Checkout = () => {
         }
     }
 
-    const onSubmit = async (data: CheckoutForm) => {
-        if (!selectedAddress) {
-            toast.error("Please select a delivery address!")
-            return
-        }
-
-        const address = addresses.find(a => a._id === selectedAddress)
-        if (!address) return
-
-        try {
-            setLoading(true)
-            const order = await createOrder({
-                shippingAddress: {
-                    fullName:   address.fullName,
-                    phone:      address.phone,
-                    street:     address.street,
-                    city:       address.city,
-                    province:   address.province,
-                    postalCode: address.postalCode,
-                    country:    address.country,
-                },
-                paymentMethod: "cod",
-                couponCode:    couponApplied ? couponCode : undefined,
-                note:          data.note,
-            })
-            await clearCart({ callApi: false })
-            toast.success("Order placed successfully!")
-            navigate.push(`/orders/${order._id}`)
-        } catch (error: unknown) {
-            toastApiError(error, "Order failed")
-        } finally {
-            setLoading(false)
-        }
+ const onSubmit = async (data: CheckoutForm) => {
+    if (!selectedAddress) {
+        toast.error("Please select a delivery address!")
+        return
     }
 
+    const address = addresses.find(a => a._id === selectedAddress)
+    if (!address) return
+
+    try {
+        setLoading(true)
+
+        const order = await createOrder({
+            shippingAddress: {
+                fullName: address.fullName,
+                phone: address.phone,
+                street: address.street,
+                city: address.city,
+                province: address.province,
+                postalCode: address.postalCode,
+                country: address.country,
+            },
+            paymentMethod: "cod",
+            couponCode: couponApplied ? couponCode : undefined,
+            note: data.note,
+        })
+
+        // ✅ Meta Pixel Purchase Event
+        trackEvent("Purchase", {
+            value: cart?.finalAmount || 0,
+            currency: "PKR",
+        })
+
+        await clearCart({ callApi: false })
+
+        toast.success("Order placed successfully!")
+        navigate.push(`/orders/${order._id}`)
+
+    } catch (error: unknown) {
+        toastApiError(error, "Order failed")
+    } finally {
+        setLoading(false)
+    }
+}
     const finalAmount = (cart?.finalAmount || 0) - discount
 
     return (

@@ -47,7 +47,7 @@ const BookDetail = () => {
             queryClient.invalidateQueries({ queryKey: queryKeys.reviews(id) })
             reset()
         },
-        onError: (err: any) => {
+        onError: (err: unknown) => {
             toastApiError(err, "Failed to add review")
         },
         onSettled: () => setReviewLoading(false)

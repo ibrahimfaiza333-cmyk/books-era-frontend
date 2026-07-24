@@ -92,10 +92,20 @@ const Checkout = () => {
         })
 
         // ✅ Meta Pixel Purchase Event
-        trackEvent("Purchase", {
-            value: cart?.finalAmount || 0,
-            currency: "PKR",
-        })
+        // ✅ Meta Pixel Purchase Event
+trackEvent("Purchase", {
+    value: cart?.finalAmount || 0,
+    currency: "PKR",
+})
+
+await clearCart({ callApi: false })
+
+toast.success("Order placed successfully!")
+
+// Thoda delay taake Pixel event Facebook tak pohonch jaye navigate hone se pehle
+await new Promise(resolve => setTimeout(resolve, 300))
+
+navigate.push(`/orders/${order._id}`)
 
         await clearCart({ callApi: false })
 

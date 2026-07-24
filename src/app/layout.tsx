@@ -78,6 +78,7 @@ export default function RootLayout({
             fbq('init', '${process.env.NEXT_PUBLIC_META_PIXEL_ID}');
             fbq('track', 'PageView');
           `}
+          
         </Script>
 
         <noscript>

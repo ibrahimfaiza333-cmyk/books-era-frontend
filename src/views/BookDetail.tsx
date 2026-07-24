@@ -80,6 +80,8 @@ const handleAddToCart = async () => {
         return
     }
 
+    if (!book) return
+
     try {
         setLoading(true)
 
@@ -102,7 +104,6 @@ const handleAddToCart = async () => {
         setLoading(false)
     }
 }
-
     const handleWishlist = async () => {
         if (!isLoggedIn) {
             toast.error("Please login first!")

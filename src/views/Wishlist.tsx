@@ -7,6 +7,7 @@ import { useCart } from "../hooks/useCart"
 import { toastApiError } from "../lib/api-error"
 import { toast } from "react-toastify";
 import ProtectedRoute from "../components/common/ProtectedRoute"
+import { trackEvent } from "@/lib/facebookPixel";
 
 const Wishlist = () => {
     const { wishlist, isLoading, removeFromWishlist } = useWishlist()

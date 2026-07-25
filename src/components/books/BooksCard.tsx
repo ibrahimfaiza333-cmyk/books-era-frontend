@@ -9,6 +9,7 @@ import { getDiscountPercent } from "../../lib/book"
 import { toastApiError } from "../../lib/api-error"
 import { toast } from "react-toastify";
 import { useAppSelector } from "../../store/hooks"
+import { optimizeCloudinaryUrl } from "../../lib/utils"
 
 interface Props {
     book: Book
@@ -54,7 +55,7 @@ const BookCard = ({ book }: Props) => {
     }
 
     const rawImages = [book.coverImage, book.thumbnail, ...(book.images?.map(i => i.url) || [])]
-    const currentImage = rawImages.filter(Boolean)[0] || ""
+    const currentImage = optimizeCloudinaryUrl(rawImages.filter(Boolean)[0] || "")
 
     return (
         <Link
@@ -67,6 +68,7 @@ const BookCard = ({ book }: Props) => {
                     <img
                         src={currentImage}
                         alt={book.title}
+                        loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         onError={(e) => {
                             (e.target as HTMLImageElement).src = "https://placehold.co/300x400/f3f4f6/a3a3a3?text=No+Cover"

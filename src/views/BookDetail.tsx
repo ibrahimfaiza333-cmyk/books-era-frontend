@@ -6,6 +6,7 @@ import {
     ShoppingCart, Heart, Star,
     Minus, Plus, ArrowLeft, Loader2, BookOpen, Image as ImageIcon
 } from "lucide-react"
+import NextImage from "next/image"
 import { useBookDetail, useBookReviews } from "../hooks/useBooks"
 import { useCart } from "../hooks/useCart"
 import { useWishlist } from "../hooks/useWishlist"
@@ -19,6 +20,7 @@ import { addReview } from "../api/reviews.api"
 import { queryKeys } from "../lib/query-keys"
 import type{ Review } from "../types"
 import { trackEvent } from "@/lib/facebookPixel";
+import { optimizeCloudinaryUrl } from "../lib/utils"
 
 
 const BookDetail = () => {
@@ -120,9 +122,41 @@ const handleAddToCart = async () => {
 
     if (isLoading) {
         return (
-            <div style={{ minHeight: "calc(100vh - 64px)", width: "100%", background: "#F5F3EF", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Loader2 size={32} style={{ animation: "spin 1s linear infinite", color: "#f97316" }} />
-                <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+            <div style={{ minHeight: "calc(100vh - 64px)", width: "100%", background: "#F5F3EF" }}>
+                <div style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 24px 80px" }}>
+                    {/* Breadcrumb placeholder */}
+                    <div style={{ width: 110, height: 15, borderRadius: 6, background: "#e5e7eb", marginBottom: 24, animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite" }} />
+
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 32, alignItems: "start" }}>
+                        {/* Left column skeleton — same shape as the real image block */}
+                        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                            <div style={{
+                                background: "#e5e7eb", borderRadius: 20,
+                                aspectRatio: "3/4", maxWidth: 380, width: "100%", margin: "0 auto",
+                                animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
+                            }} />
+                            <div style={{ display: "flex", gap: 12 }}>
+                                {[...Array(3)].map((_, i) => (
+                                    <div key={i} style={{ width: 72, height: 96, borderRadius: 12, background: "#e5e7eb", animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite", animationDelay: `${i * 0.1}s` }} />
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Right column skeleton — same shape as the details card */}
+                        <div style={{ background: "#fff", borderRadius: 20, border: "1px solid #f0ede9", boxShadow: "0 1px 4px rgba(0,0,0,0.05)", padding: 32, display: "flex", flexDirection: "column", gap: 24 }}>
+                            <div style={{ width: 90, height: 22, borderRadius: 999, background: "#e5e7eb", animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite" }} />
+                            <div style={{ width: "80%", height: 30, borderRadius: 8, background: "#e5e7eb", animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite" }} />
+                            <div style={{ width: "40%", height: 16, borderRadius: 6, background: "#e5e7eb", animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite" }} />
+                            <div style={{ width: 140, height: 34, borderRadius: 8, background: "#e5e7eb", animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite" }} />
+                            <div style={{ height: 90, borderRadius: 16, background: "#f9fafb", border: "1px solid #f3f4f6" }} />
+                            <div style={{ display: "flex", gap: 12 }}>
+                                <div style={{ flex: 1, height: 54, borderRadius: 14, background: "#e5e7eb", animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite" }} />
+                                <div style={{ width: 54, height: 54, borderRadius: 14, background: "#e5e7eb", animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite" }} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <style>{`@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }`}</style>
             </div>
         )
     }
@@ -152,8 +186,8 @@ const handleAddToCart = async () => {
 
     // Include coverImage in the array of potential images
     const rawImages = [book.coverImage, book.thumbnail, ...(book.images?.map(i => i.url) || [])]
-    const images = rawImages.filter(Boolean) as string[]
-    if (images.length === 0) images.push("") // Fallback slot
+    const images = rawImages.filter(Boolean).map((url) => optimizeCloudinaryUrl(url as string, 800)) as string[]
+    if (images.length === 0) images.push("https://placehold.co/400x600/f3f4f6/a3a3a3?text=No+Cover") // Fallback slot
 
     const currentImage = images[activeImg] || ""
 
@@ -188,13 +222,12 @@ const handleAddToCart = async () => {
                             maxWidth: 380, width: "100%", margin: "0 auto"
                         }}>
                             {currentImage ? (
-                                <img
+                                <NextImage
                                     src={currentImage}
                                     alt={book.title}
-                                    style={{ width: "100%", height: "100%", objectFit: "cover", color: "transparent" }}
-                                    onError={(e) => {
-                                        (e.target as HTMLImageElement).src = "https://placehold.co/400x600/f3f4f6/a3a3a3?text=No+Cover"
-                                    }}
+                                    fill
+                                    sizes="(max-width: 480px) 320px, 380px"
+                                    style={{ objectFit: "cover", color: "transparent" }}
                                 />
                             ) : (
                                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10, color: "#9ca3af" }}>
@@ -219,11 +252,12 @@ const handleAddToCart = async () => {
                                             background: "#f3f4f6"
                                         }}
                                     >
-                                        <img
-                                            src={img}
-                                            alt=""
-                                            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                                            onError={(e) => { (e.target as HTMLImageElement).src = "https://placehold.co/400x600/f3f4f6/a3a3a3?text=No+Cover" }}
+                                        <NextImage
+                                            src={img || "https://placehold.co/400x600/f3f4f6/a3a3a3?text=No+Cover"}
+                                            alt={book.title || "thumbnail"}
+                                            width={72}
+                                            height={96}
+                                            style={{ objectFit: "cover" }}
                                         />
                                     </button>
                                 ))}

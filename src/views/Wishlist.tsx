@@ -1,6 +1,7 @@
 "use client";
 import { Heart, Trash2, ShoppingCart, BookOpen, Image as ImageIcon } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import PageSpinner from "../components/common/PageSpinner"
 import { useWishlist } from "../hooks/useWishlist"
 import { useCart } from "../hooks/useCart"
@@ -8,6 +9,9 @@ import { toastApiError } from "../lib/api-error"
 import { toast } from "react-toastify";
 import ProtectedRoute from "../components/common/ProtectedRoute"
 import { trackEvent } from "@/lib/facebookPixel";
+import { optimizeCloudinaryUrl } from "../lib/utils"
+
+
 
 const Wishlist = () => {
     const { wishlist, isLoading, removeFromWishlist } = useWishlist()
@@ -114,7 +118,7 @@ const Wishlist = () => {
                     /* ── Book grid ── */
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6 lg:gap-7">
                         {wishlist.map(book => {
-                            const imageSrc = book.coverImage || book.thumbnail || book.images?.[0]?.url
+                          const imageSrc = optimizeCloudinaryUrl(book.coverImage || book.thumbnail || book.images?.[0]?.url || "")
                             return (
                                 <div
                                     key={book._id}
@@ -141,10 +145,12 @@ const Wishlist = () => {
                                     <Link href={`/books/${book._id}`} style={{ textDecoration: "none", display: "block" }}>
                                         <div style={{ aspectRatio: "3/4", overflow: "hidden", background: "#f3f4f6", position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
                                             {imageSrc ? (
-                                                <img
+                                                <Image
                                                     src={imageSrc}
                                                     alt={book.title}
-                                                    style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .35s ease", display: "block", color: "transparent" }}
+                                                    fill
+                                                    style={{ objectFit: "cover", transition: "transform .35s ease" }}
+                                                    className="book-cover-img"
                                                     onMouseEnter={e => { (e.target as HTMLImageElement).style.transform = "scale(1.06)" }}
                                                     onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = "scale(1)" }}
                                                     onError={e => {

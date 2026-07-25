@@ -1,5 +1,6 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { MapPin, Loader2, CreditCard, ArrowRight, CheckCircle2, ShieldCheck, Tag } from "lucide-react"
@@ -11,7 +12,7 @@ import { toast } from "react-toastify";
 import type{ Address } from "../types"
 import ProtectedRoute from "../components/common/ProtectedRoute"
 import { trackEvent } from "@/lib/facebookPixel";
-
+import { optimizeCloudinaryUrl } from "../lib/utils"
 
 interface CheckoutForm {
     note:        string
@@ -29,8 +30,7 @@ const Checkout = () => {
     const [discount,        setDiscount]        = useState(0)
     const [couponApplied,   setCouponApplied]   = useState(false)
 
-    const { register, handleSubmit, watch, setValue } = useForm<CheckoutForm>()
-    const couponCode = watch("couponCode")
+    const { register, handleSubmit, watch, setValue, getValues } = useForm<CheckoutForm>()
 
     // Auto-apply coupon from Cart URL param
     useEffect(() => {
@@ -50,6 +50,7 @@ const Checkout = () => {
     })
 
     const handleApplyCoupon = async () => {
+        const couponCode = getValues("couponCode")
         if (!couponCode?.trim()) return
         try {
             const result = await validateCoupon({
@@ -87,7 +88,7 @@ const Checkout = () => {
                 country: address.country,
             },
             paymentMethod: "cod",
-            couponCode: couponApplied ? couponCode : undefined,
+            couponCode: couponApplied ? getValues("couponCode") : undefined,
             note: data.note,
         })
 
@@ -300,11 +301,14 @@ navigate.push(`/orders/${order._id}`)
                                                     width: 48, height: 68, borderRadius: 8, overflow: "hidden", flexShrink: 0,
                                                     boxShadow: "0 2px 8px rgba(0,0,0,0.1)", border: "1px solid #f3f4f6"
                                                 }}>
-                                                    <img
-                                                        src={item.book.coverImage || item.book.thumbnail}
+                                                    <Image
+                                                        src={optimizeCloudinaryUrl(item.book.coverImage ?? item.book.thumbnail ?? "https://via.placeholder.com/48x68?text=Book")}
                                                         alt={item.book.title}
+                                                        width={48}
+                                                        height={68}
                                                         style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                                                        onError={(e) => { (e.target as HTMLImageElement).src = "https://via.placeholder.com/48x68?text=Book" }}
+                                                        onError={() => { /* fallback handled by providing placeholder URL above */ }}
+                                                        unoptimized
                                                     />
                                                 </div>
                                                 <div style={{ flex: 1 }}>

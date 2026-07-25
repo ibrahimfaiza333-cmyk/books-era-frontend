@@ -3,11 +3,15 @@ import { useState } from "react"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 import { ArrowLeft, MapPin, Loader2, Package, CreditCard, CheckCircle } from "lucide-react"
+import Image from "next/image"
 import PageSpinner from "../components/common/PageSpinner"
 import { useOrderDetail, useOrders } from "../hooks/useOrders"
 import { toastApiError } from "../lib/api-error"
 import { toast } from "react-toastify";
 import ProtectedRoute from "../components/common/ProtectedRoute"
+import { optimizeCloudinaryUrl } from "../lib/utils"
+
+
 
 const statusStyle: Record<string, React.CSSProperties> = {
     pending:    { background: "#fef9c3", color: "#854d0e", border: "1px solid #fde047" },
@@ -181,12 +185,14 @@ const OrderDetail = () => {
                                 padding: "16px 0",
                                 borderBottom: i < order.items.length - 1 ? "1px solid #f9fafb" : "none",
                             }}>
-                                <div style={{ width: 56, height: 72, borderRadius: 10, overflow: "hidden", background: "#f3f4f6", flexShrink: 0, border: "1px solid #f0ede9" }}>
-                                    <img
-                                        src={item.coverImage}
+                                <div style={{ width: 56, height: 72, borderRadius: 10, overflow: "hidden", background: "#f3f4f6", flexShrink: 0, border: "1px solid #f0ede9", position: "relative" }}>
+                                    <Image
+                                        src={optimizeCloudinaryUrl(item.coverImage) || "https://via.placeholder.com/56x72?text=📖"}
                                         alt={item.title}
+                                        width={56}
+                                        height={72}
                                         style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                                        onError={e => { (e.target as HTMLImageElement).src = "https://via.placeholder.com/56x72?text=📖" }}
+                                        onError={(e) => { (e.target as HTMLImageElement).src = "https://via.placeholder.com/56x72?text=📖" }}
                                     />
                                 </div>
                                 <div style={{ flex: 1, minWidth: 0 }}>

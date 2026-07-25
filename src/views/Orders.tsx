@@ -1,11 +1,14 @@
 "use client";
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Package, ChevronRight, ShoppingBag } from "lucide-react"
 import PageSpinner from "../components/common/PageSpinner"
 import { useOrdersList } from "../hooks/useOrders"
 import type { Order } from "../types"
 import ProtectedRoute from "../components/common/ProtectedRoute"
+import { optimizeCloudinaryUrl } from "../lib/utils"
+
 
 const statusStyle: Record<string, React.CSSProperties> = {
     pending:    { background: "#fef9c3", color: "#854d0e", border: "1px solid #fde047" },
@@ -119,9 +122,11 @@ const Orders = () => {
                                     <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
                                         {order.items.slice(0, 4).map((item, i) => (
                                             <div key={i} style={{ width: 44, height: 58, borderRadius: 8, overflow: "hidden", background: "#f3f4f6", flexShrink: 0, border: "1px solid #f0ede9" }}>
-                                                <img
-                                                    src={item.coverImage}
+                                                <Image
+                                                    src={optimizeCloudinaryUrl(item.coverImage)}
                                                     alt={item.title}
+                                                    width={44}
+                                                    height={58}
                                                     style={{ width: "100%", height: "100%", objectFit: "cover" }}
                                                     onError={e => { (e.target as HTMLImageElement).src = "https://via.placeholder.com/44x58?text=📖" }}
                                                 />

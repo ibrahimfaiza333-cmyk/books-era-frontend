@@ -8,7 +8,7 @@ import { toastApiError } from "../lib/api-error"
 import { toast } from "react-toastify";
 import ProtectedRoute from "../components/common/ProtectedRoute"
 import { trackEvent } from "@/lib/facebookPixel";
-
+import { optimizeCloudinaryUrl } from "../lib/utils"
 
 const Cart = () => {
     const navigate = useRouter()
@@ -159,8 +159,9 @@ const Cart = () => {
                                 >
                                     {/* Book Image */}
                                     <Link href={`/books/${item.book._id}`} style={{ flexShrink: 0 }}>
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
                                         <img
-                                            src={item.book.coverImage || item.book.thumbnail}
+                                            src={optimizeCloudinaryUrl(item.book.coverImage ?? item.book.thumbnail ?? "")}
                                             alt={item.book.title}
                                             style={{
                                                 width: '70px',

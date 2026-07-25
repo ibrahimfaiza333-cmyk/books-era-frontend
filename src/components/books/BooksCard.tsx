@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Heart, ShoppingCart, Image as ImageIcon } from "lucide-react"
+import Image from "next/image"
 import type { Book } from "../../types"
 import { useCart } from "../../hooks/useCart"
 import { useWishlist } from "../../hooks/useWishlist"
@@ -65,14 +66,12 @@ const BookCard = ({ book }: Props) => {
             {/* ── Image Area ── */}
             <div className="relative w-full aspect-[3/4] bg-gray-50 flex items-center justify-center overflow-hidden">
                 {currentImage ? (
-                    <img
+                    <Image
                         src={currentImage}
                         alt={book.title}
-                        loading="lazy"
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        onError={(e) => {
-                            (e.target as HTMLImageElement).src = "https://placehold.co/300x400/f3f4f6/a3a3a3?text=No+Cover"
-                        }}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 768px) 50vw, 25vw"
                     />
                 ) : (
                     <div className="flex flex-col items-center gap-2 text-gray-400">
